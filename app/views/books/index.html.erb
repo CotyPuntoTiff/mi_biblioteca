@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Books</h1>
+<%= search_form_for @q do |f| %>
+  <%= f.label :status_eq, "Estado" %>
+  <%= f.select :status_eq, options_for_select(Book.statuses, @q.status_eq) %>
+  <%= f.submit %>
+<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Titulo</th>
+      <th>Autor</th>
+      <th>Status</th>
+      <th>Fecha de prestamo</th>
+      <th>Fecha de devolucion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.status %></td>
+        <td><%= book.date_borrowed %></td>
+        <td><%= book.date_returned %></td>
+        <td><%= link_to 'ver', book %></td>
+        <td><%= link_to 'editar', edit_book_path(book) %></td>
+        <td><%= link_to 'eliminar', book, method: :delete, data: { confirm: 'estas seguro de querer eliminarlo?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'nuevo libro', new_book_path %>
